@@ -3,21 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pr7tarea1;
+package pr7tarea2;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JInternalFrame;
 
 /**
  *
  * @author usuario
  */
-public class Pr7Tarea1Frame extends javax.swing.JFrame {
+public class Pr7Tarea2Frame extends javax.swing.JFrame {
 
     /**
      * Creates new form pr7Tarea1Frame
      */
-    public Pr7Tarea1Frame() {
+    public Pr7Tarea2Frame() {
         initComponents();
     }
 
@@ -30,8 +31,8 @@ public class Pr7Tarea1Frame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Album = new javax.swing.JTabbedPane();
         jLabel1 = new javax.swing.JLabel();
+        Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -42,18 +43,18 @@ public class Pr7Tarea1Frame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Visor Imágenes");
 
-        Album.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AlbumMouseClicked(evt);
-            }
-        });
-        Album.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                AlbumPropertyChange(evt);
-            }
-        });
-
         jLabel1.setText("Héctor Garbisu DIU 2015");
+
+        javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
+        Escritorio.setLayout(EscritorioLayout);
+        EscritorioLayout.setHorizontalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        EscritorioLayout.setVerticalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 259, Short.MAX_VALUE)
+        );
 
         jMenu1.setText("File");
 
@@ -93,15 +94,15 @@ public class Pr7Tarea1Frame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Album)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(0, 281, Short.MAX_VALUE))
+            .addComponent(Escritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(Album, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addComponent(Escritorio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1))
         );
@@ -114,39 +115,41 @@ public class Pr7Tarea1Frame extends javax.swing.JFrame {
         fileChooser.setCurrentDirectory(null);
         ImageFilter filter = new ImageFilter();
         fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setFileFilter(filter);
+        
         int retorno = fileChooser.showOpenDialog(jMenuItem1);
         if (retorno != JFileChooser.APPROVE_OPTION)return;
         File file = fileChooser.getSelectedFile();
+        if (file==null)return;
         String filename = file.getName();
+        JInternalFrame ventana = new JInternalFrame();
+        ventana.setTitle(file.getName());
         VisorImagen visor = new VisorImagen();
         visor.setImagen(file);
-        Album.add(filename,visor);
+        ventana.setSize(400,200);
+        ventana.setClosable(true);
+        ventana.setIconifiable(true);
+        ventana.setResizable(true);
+        ventana.setMaximizable(true);
+        ventana.add(visor);
+        ventana.setVisible(true);
+        Escritorio.add(ventana);
+//        Album.add(filename,visor);
         // Se muestra la ultima imagen añadida
-        Album.setSelectedIndex(Album.getComponentCount()-1);
+//        Album.setSelectedIndex(Album.getComponentCount()-1);
         // Se cambia el titulo
         setTitle("Visor Imágenes - "+file.getName());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        int index = Album.getSelectedIndex();
-        if(index != -1)
-            Album.removeTabAt(index);
+//        int index = Album.getSelectedIndex();
+//        if(index != -1)
+//            Album.removeTabAt(index);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         dispose();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void AlbumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AlbumMouseClicked
-        //Se cambia el titulo si se hace clic
-        int index = Album.getSelectedIndex();
-        String name = Album.getTitleAt(index);
-        setTitle("Visor Imágenes - "+name);
-    }//GEN-LAST:event_AlbumMouseClicked
-
-    private void AlbumPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_AlbumPropertyChange
-
-    }//GEN-LAST:event_AlbumPropertyChange
 
     /**
      * @param args the command line arguments
@@ -165,27 +168,29 @@ public class Pr7Tarea1Frame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Pr7Tarea1Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Pr7Tarea2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Pr7Tarea1Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Pr7Tarea2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Pr7Tarea1Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Pr7Tarea2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Pr7Tarea1Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Pr7Tarea2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pr7Tarea1Frame().setVisible(true);
+                new Pr7Tarea2Frame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane Album;
+    private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
