@@ -5,6 +5,7 @@
  */
 package pr7tarea2;
 
+import java.awt.Dimension;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
@@ -116,29 +117,35 @@ public class Pr7Tarea2Frame extends javax.swing.JFrame {
         ImageFilter filter = new ImageFilter();
         fileChooser.addChoosableFileFilter(filter);
         fileChooser.setFileFilter(filter);
-        
+        fileChooser.setMultiSelectionEnabled(true);
         int retorno = fileChooser.showOpenDialog(jMenuItem1);
         if (retorno != JFileChooser.APPROVE_OPTION)return;
-        File file = fileChooser.getSelectedFile();
-        if (file==null)return;
-        String filename = file.getName();
-        JInternalFrame ventana = new JInternalFrame();
-        ventana.setTitle(file.getName());
-        VisorImagen visor = new VisorImagen();
-        visor.setImagen(file);
-        ventana.setSize(400,200);
-        ventana.setClosable(true);
-        ventana.setIconifiable(true);
-        ventana.setResizable(true);
-        ventana.setMaximizable(true);
-        ventana.add(visor);
-        ventana.setVisible(true);
-        Escritorio.add(ventana);
-//        Album.add(filename,visor);
-        // Se muestra la ultima imagen añadida
-//        Album.setSelectedIndex(Album.getComponentCount()-1);
-        // Se cambia el titulo
-        setTitle("Visor Imágenes - "+file.getName());
+        File[] files = fileChooser.getSelectedFiles();
+        if (files==null)return;
+        //La posicion de las ventanas internas va cambiando
+        Dimension deskDimention = Escritorio.getSize();
+        int maxX = (int)deskDimention.getWidth();
+        int maxY = (int)deskDimention.getHeight();
+        int x = 0;
+        int y = 0;
+        for (File file : files) {
+            String filename = file.getName();
+            JInternalFrame ventana = new JInternalFrame();
+            ventana.setTitle(file.getName());
+            VisorImagen visor = new VisorImagen();
+            visor.setImagen(file);
+            ventana.setSize(400,200);
+            ventana.setClosable(true);
+            ventana.setIconifiable(true);
+            ventana.setResizable(true);
+            ventana.setMaximizable(true);
+            ventana.add(visor);
+            ventana.setVisible(true);
+            ventana.setLocation(x, y);
+            Escritorio.add(ventana);
+            x = (int) ((x+40)%(maxX));
+            y = (int) ((x+20)%(maxY));
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -162,7 +169,7 @@ public class Pr7Tarea2Frame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
