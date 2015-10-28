@@ -12,7 +12,7 @@ import javax.swing.JInternalFrame;
 
 /**
  *
- * @author usuario
+ * @author Héctor Garbisu
  */
 public class Pr7Tarea2Frame extends javax.swing.JFrame {
 

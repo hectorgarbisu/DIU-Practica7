@@ -10,7 +10,7 @@ import javax.swing.JFileChooser;
 
 /**
  *
- * @author usuario
+ * @author Héctor Garbisu
  */
 public class Pr7Tarea1Frame extends javax.swing.JFrame {
 
