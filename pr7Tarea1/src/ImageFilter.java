@@ -1,4 +1,4 @@
-package pr7tarea1;
+
 import java.io.File;
 import javax.swing.filechooser.*;  
 
